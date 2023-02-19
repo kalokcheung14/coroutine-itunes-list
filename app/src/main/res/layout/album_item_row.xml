@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.kalok.simpleituneslist.R" />
+        <variable
+            name="album"
+            type="com.kalok.simpleituneslist.viewmodels.AlbumViewModel" />
+    </data>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical"
+        android:baselineAligned="false">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="2">
+                <ImageView
+                    android:id="@+id/artwork_image_view"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/album_name_textview"
+                    android:layout_marginStart="15dp"
+                    app:imageUrl="@{album.artworkUrl}"
+                    android:contentDescription="@string/cover_artwork"/>
+                <TextView
+                    android:id="@+id/album_name_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="90dp"
+                    android:text="@{album.albumName}"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/artwork_image_view"
+                    app:layout_constraintEnd_toStartOf="@id/bookmark_image_view"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:id="@+id/bookmark_image_view"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    app:tint="@color/black"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:layout_gravity="center_vertical"
+                    android:src="@{album.bookmarked? @drawable/outline_bookmark_24: @drawable/outline_bookmark_border_24}"
+                    android:contentDescription="@string/title_bookmarks" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>

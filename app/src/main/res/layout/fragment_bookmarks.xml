@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="albumListIsEmpty"
+            type="boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:context=".ui.bookmarks.BookmarksFragment" >
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{albumListIsEmpty? View.GONE : View.VISIBLE}"
+            tools:ignore="MissingConstraints">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/album_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{albumListIsEmpty? View.GONE : View.VISIBLE}"
+            android:background="@color/white"/>
+        <TextView
+            android:id="@+id/no_bookmark_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/you_have_no_bookmarks"
+            android:textColor="@color/black"
+            android:background="@color/white"
+            android:gravity="center"
+            android:layout_margin="12dp"
+            android:visibility="@{albumListIsEmpty? View.VISIBLE : View.GONE}"
+            android:textSize="24sp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
