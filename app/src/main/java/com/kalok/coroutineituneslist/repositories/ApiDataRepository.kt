@@ -3,8 +3,6 @@ package com.kalok.coroutineituneslist.repositories
 import android.util.Log
 import com.kalok.coroutineituneslist.models.Album
 import com.kalok.coroutineituneslist.models.DataResult
-import com.kalok.coroutineituneslist.utils.Result
-import com.kalok.coroutineituneslist.utils.asResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import retrofit2.http.GET
