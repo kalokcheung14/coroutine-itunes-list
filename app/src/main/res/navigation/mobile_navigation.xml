@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.kalok.simpleituneslist.ui.home.HomeFragment"
+        android:name="com.kalok.coroutineituneslist.ui.home.HomeFragment"
         android:label="@string/title_list"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_bookmarks"
-        android:name="com.kalok.simpleituneslist.ui.bookmarks.BookmarksFragment"
+        android:name="com.kalok.coroutineituneslist.ui.bookmarks.BookmarksFragment"
         android:label="@string/title_bookmarks"
         tools:layout="@layout/fragment_bookmarks" />
 

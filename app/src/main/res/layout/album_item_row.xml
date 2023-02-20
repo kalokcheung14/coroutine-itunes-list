@@ -2,10 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <import type="com.kalok.simpleituneslist.R" />
+        <import type="com.kalok.coroutineituneslist.R" />
         <variable
             name="album"
-            type="com.kalok.simpleituneslist.viewmodels.AlbumViewModel" />
+            type="com.kalok.coroutineituneslist.viewmodels.AlbumViewModel" />
     </data>
     
     <LinearLayout
