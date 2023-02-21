@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kalok.coroutineituneslist.databinding.SongItemRowBinding
+import com.kalok.coroutineituneslist.utils.MediaPlayerUtils
 import com.kalok.coroutineituneslist.viewmodels.SongViewModel
 
 abstract class SongAdapter(
@@ -40,7 +41,7 @@ abstract class SongAdapter(
                             notifyItemChanged(position)
                         } else {
                             // If song is bookmarked, remove the song from bookmark and set the icon to outline
-                            releasePlayer()
+                            MediaPlayerUtils.releasePlayer()
                             handleRemoveBookmark(song, position)
                         }
                     }
@@ -49,18 +50,11 @@ abstract class SongAdapter(
                 song.playing.let { playing ->
                     // Play preview action
                     playImageView.setOnClickListener {
-                        releasePlayer()
+                        MediaPlayerUtils.releasePlayer()
 
                         if (!playing) {
                             // Play new preview using new player
-                            _player = getPlayer().apply {
-                                setDataSource(song.previewUrl)
-                                prepare()
-                                start()
-                            }
-
-                            // Save current playing song
-                            _playingSong = song
+                            MediaPlayerUtils.play(song)
                         }
 
                         // Invert playing flag
@@ -71,31 +65,6 @@ abstract class SongAdapter(
                     }
                 }
             }
-        }
-    }
-
-    private fun releasePlayer() {
-        // Stop and release player if it is playing
-        if (_player != null && _player?.isPlaying == true) {
-            // Release player
-            _player?.stop()
-            _player?.release()
-            _player = null
-            // Reset playing song icon
-            _playingSong?.playing = false
-            _playingSong = null
-        }
-    }
-
-    // Create a new player
-    protected fun getPlayer(): MediaPlayer {
-        return MediaPlayer().apply {
-            setAudioAttributes(
-                AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .build()
-            )
         }
     }
 

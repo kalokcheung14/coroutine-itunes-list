@@ -12,7 +12,9 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.kalok.coroutineituneslist.adapters.SongAdapter
 import com.kalok.coroutineituneslist.adapters.BookmarkListAdapter
 import com.kalok.coroutineituneslist.databinding.FragmentBookmarksBinding
+import com.kalok.coroutineituneslist.utils.MediaPlayerUtils
 import com.kalok.coroutineituneslist.utils.setup
+import com.kalok.coroutineituneslist.viewmodels.BookmarksViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -81,7 +83,19 @@ class BookmarksFragment : Fragment() {
             adapter = _viewAdapter
         }
 
+        // Reset icon when play ended
+        MediaPlayerUtils.setOnCompletionListener {
+            _viewAdapter.notifyDataSetChanged()
+        }
+
         return root
+    }
+
+    override fun onDetach() {
+        MediaPlayerUtils.releasePlayer()
+        MediaPlayerUtils.removeOnCompletionListener()
+        _binding?.songRecyclerView?.adapter = null
+        super.onDetach()
     }
 
     override fun onDestroyView() {

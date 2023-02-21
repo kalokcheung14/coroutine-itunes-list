@@ -13,6 +13,8 @@ import com.kalok.coroutineituneslist.adapters.SongAdapter
 import com.kalok.coroutineituneslist.adapters.HomeListAdapter
 import com.kalok.coroutineituneslist.utils.setup
 import com.kalok.coroutineituneslist.databinding.FragmentHomeBinding
+import com.kalok.coroutineituneslist.utils.MediaPlayerUtils
+import com.kalok.coroutineituneslist.viewmodels.HomeViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -71,12 +73,23 @@ class HomeFragment : Fragment() {
             adapter = _viewAdapter
         }
 
+        // Reset icon when play ended
+        MediaPlayerUtils.setOnCompletionListener {
+            _viewAdapter.notifyDataSetChanged()
+        }
+
         return root
     }
 
-    override fun onDestroyView() {
+    override fun onDetach() {
+        MediaPlayerUtils.releasePlayer()
+        MediaPlayerUtils.removeOnCompletionListener()
         _binding?.songRecyclerView?.adapter = null
-        _binding = null
+        super.onDetach()
+    }
+
+    override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
     }
 }

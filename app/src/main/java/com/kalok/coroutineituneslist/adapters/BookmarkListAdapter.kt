@@ -1,7 +1,7 @@
 package com.kalok.coroutineituneslist.adapters
 
 import androidx.lifecycle.ViewModel
-import com.kalok.coroutineituneslist.ui.bookmarks.BookmarksViewModel
+import com.kalok.coroutineituneslist.viewmodels.BookmarksViewModel
 import com.kalok.coroutineituneslist.viewmodels.SongViewModel
 
 class BookmarkListAdapter(

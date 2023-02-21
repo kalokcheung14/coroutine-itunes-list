@@ -1,9 +1,8 @@
-package com.kalok.coroutineituneslist.ui.bookmarks
+package com.kalok.coroutineituneslist.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kalok.coroutineituneslist.repositories.DatabaseHelper
-import com.kalok.coroutineituneslist.viewmodels.SongViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update

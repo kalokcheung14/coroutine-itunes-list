@@ -1,4 +1,4 @@
-package com.kalok.coroutineituneslist.ui.home
+package com.kalok.coroutineituneslist.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,7 +6,6 @@ import com.kalok.coroutineituneslist.models.Song
 import com.kalok.coroutineituneslist.repositories.ApiDataRepository
 import com.kalok.coroutineituneslist.repositories.DatabaseHelper
 import com.kalok.coroutineituneslist.utils.asResult
-import com.kalok.coroutineituneslist.viewmodels.SongViewModel
 import kotlinx.coroutines.launch
 import com.kalok.coroutineituneslist.utils.Result
 import kotlinx.coroutines.Dispatchers
