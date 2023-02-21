@@ -4,6 +4,6 @@
     <string name="title_bookmarks">Bookmarks</string>
 
     <string name="you_have_no_bookmarks">You have no bookmarks</string>
-    <string name="album_name">Album Name</string>
+    <string name="song_name">Song Name</string>
     <string name="cover_artwork">Cover artwork</string>
 </resources>

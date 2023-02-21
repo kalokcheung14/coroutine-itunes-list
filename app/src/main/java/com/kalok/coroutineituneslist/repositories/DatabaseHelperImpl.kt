@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 
 class DatabaseHelperImpl(context: Context): DatabaseHelper {
-    private val _databaseName: String = "albums_db"
+    private val _databaseName: String = "songs_db"
     private var _db: ItunesDatabase? = null
 
     init {
@@ -16,8 +16,8 @@ class DatabaseHelperImpl(context: Context): DatabaseHelper {
         ).build()
     }
 
-    override fun getAlbumDao(): AlbumDao? {
-        // Get album DAO
-        return _db?.albumDao()
+    override fun getSongDao(): SongDao? {
+        // Get song DAO
+        return _db?.songDao()
     }
 }

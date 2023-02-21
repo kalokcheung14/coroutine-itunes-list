@@ -2,11 +2,11 @@ package com.kalok.coroutineituneslist.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kalok.coroutineituneslist.models.Album
+import com.kalok.coroutineituneslist.models.Song
 import com.kalok.coroutineituneslist.repositories.ApiDataRepository
 import com.kalok.coroutineituneslist.repositories.DatabaseHelper
 import com.kalok.coroutineituneslist.utils.asResult
-import com.kalok.coroutineituneslist.viewmodels.AlbumViewModel
+import com.kalok.coroutineituneslist.viewmodels.SongViewModel
 import kotlinx.coroutines.launch
 import com.kalok.coroutineituneslist.utils.Result
 import kotlinx.coroutines.Dispatchers
@@ -16,49 +16,49 @@ class HomeViewModel(
     private val _repo: ApiDataRepository,
     private val _dbHelper: DatabaseHelper
 ) : ViewModel() {
-    private var albums = MutableStateFlow<ArrayList<AlbumViewModel>>(arrayListOf())
-    val albumValue: StateFlow<ArrayList<AlbumViewModel>> = albums
+    private var songs = MutableStateFlow<ArrayList<SongViewModel>>(arrayListOf())
+    val songValue: StateFlow<ArrayList<SongViewModel>> = songs
 
     init {
         // Init mutable data value
-        albums.value = ArrayList()
+        songs.value = ArrayList()
     }
 
     fun fetchData() {
-        var bookmarkAlbumList: List<Album> = emptyList()
-        var networkAlbumList: List<Album> = emptyList()
+        var bookmarkSongList: List<Song> = emptyList()
+        var networkSongList: List<Song> = emptyList()
         viewModelScope.launch(Dispatchers.IO) {
-            // Get API response for albums
-            _repo.getAlbums().asResult().collect { result ->
-                networkAlbumList = when(result) {
+            // Get API response for songs
+            _repo.getSongs().asResult().collect { result ->
+                networkSongList = when(result) {
                     is Result.Success -> result.data.results
                     is Result.Error -> arrayListOf()
                 }
             }
 
             // Subscribe to database call response to get bookmarks
-            _dbHelper.getAlbumDao()?.apply {
-                bookmarkAlbumList = getAll()
+            _dbHelper.getSongDao()?.apply {
+                bookmarkSongList = getAll()
             }
 
-            val bookmarkCollectionIdList = bookmarkAlbumList.map { it.collectionId }
+            val bookmarkCollectionIdList = bookmarkSongList.map { it.trackId }
 
-            // Get album list from response and replace the current list
-            val albumList = ArrayList<AlbumViewModel>()
+            // Get song list from response and replace the current list
+            val songList = ArrayList<SongViewModel>()
 
             // add result to an array list
-            albumList.addAll(networkAlbumList.map { album ->
-                // Encapsulate album with ViewModel
-                AlbumViewModel(
-                    album,
-                    // Update bookmarked flag based on whether the album is also contained in the bookmarked database
-                    bookmarkCollectionIdList.contains(album.collectionId),
+            songList.addAll(networkSongList.map { song ->
+                // Encapsulate song with ViewModel
+                SongViewModel(
+                    song,
+                    // Update bookmarked flag based on whether the song is also contained in the bookmarked database
+                    bookmarkCollectionIdList.contains(song.trackId),
                     _dbHelper
                 )
             })
 
-            albums.update {
-                albumList
+            songs.update {
+                songList
             }
         }
     }

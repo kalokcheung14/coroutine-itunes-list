@@ -1,14 +1,14 @@
 package com.kalok.coroutineituneslist.adapters
 
 import androidx.lifecycle.ViewModel
-import com.kalok.coroutineituneslist.viewmodels.AlbumViewModel
+import com.kalok.coroutineituneslist.viewmodels.SongViewModel
 
 class HomeListAdapter(
-    albums: ArrayList<AlbumViewModel>,
+    songs: ArrayList<SongViewModel>,
     _parentViewModel: ViewModel? = null
-): AlbumAdapter(
-    albums,
+): SongAdapter(
+    songs,
     _parentViewModel
 )  {
-    override fun handleRemoveBookmark(album: AlbumViewModel, position: Int) = notifyItemChanged(position)
+    override fun handleRemoveBookmark(song: SongViewModel, position: Int) = notifyItemChanged(position)
 }

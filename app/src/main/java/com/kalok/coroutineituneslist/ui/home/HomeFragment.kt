@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.kalok.coroutineituneslist.adapters.AlbumAdapter
+import com.kalok.coroutineituneslist.adapters.SongAdapter
 import com.kalok.coroutineituneslist.adapters.HomeListAdapter
 import com.kalok.coroutineituneslist.utils.setup
 import com.kalok.coroutineituneslist.databinding.FragmentHomeBinding
@@ -22,7 +22,7 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var _viewAdapter : AlbumAdapter
+    private lateinit var _viewAdapter : SongAdapter
     private lateinit var _viewManager : RecyclerView.LayoutManager
     private lateinit var _shimmerLayout: ShimmerFrameLayout
 
@@ -44,28 +44,28 @@ class HomeFragment : Fragment() {
         // Get LinearLayoutManager for RecyclerView
         _viewManager = LinearLayoutManager(context)
 
-        val albumRecyclerView = binding.albumRecyclerView
+        val songRecyclerView = binding.songRecyclerView
         // Set recycler view invisible at the beginning for loading
-        albumRecyclerView.visibility = View.INVISIBLE
+        songRecyclerView.visibility = View.INVISIBLE
 
         // Fetch data
         homeViewModel.fetchData()
 
-        // Observe for album list to update
-        _viewAdapter = HomeListAdapter(homeViewModel.albumValue.value)
+        // Observe for song list to update
+        _viewAdapter = HomeListAdapter(homeViewModel.songValue.value)
         viewLifecycleOwner.lifecycleScope.launch {
-            homeViewModel.albumValue.collect {
+            homeViewModel.songValue.collect {
                 if (it.isNotEmpty()) {
                     // Update the recycler view data when update is observed
                     _viewAdapter.setDataset(it)
                     _shimmerLayout.stopShimmer()
-                    albumRecyclerView.visibility = View.VISIBLE
+                    songRecyclerView.visibility = View.VISIBLE
                 }
             }
         }
 
         // set up recycler view
-        albumRecyclerView.apply {
+        songRecyclerView.apply {
             setup()
             layoutManager = _viewManager
             adapter = _viewAdapter

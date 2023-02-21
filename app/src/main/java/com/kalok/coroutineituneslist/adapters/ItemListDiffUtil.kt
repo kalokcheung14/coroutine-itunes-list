@@ -2,7 +2,7 @@ package com.kalok.coroutineituneslist.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 
-class ItemListDiffUtil<Album>(private val oldItems: ArrayList<Album>, private val newItems: ArrayList<Album>): DiffUtil.Callback() {
+class ItemListDiffUtil<T>(private val oldItems: ArrayList<T>, private val newItems: ArrayList<T>): DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldItems.size
 
     override fun getNewListSize(): Int = newItems.size

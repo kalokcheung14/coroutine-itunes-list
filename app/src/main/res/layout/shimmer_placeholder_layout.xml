@@ -21,11 +21,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/album_name_textview"
+            app:layout_constraintEnd_toStartOf="@id/song_name_textview"
             android:layout_marginStart="15dp"
             android:contentDescription="@string/cover_artwork"/>
         <LinearLayout
-            android:id="@+id/album_name_textview"
+            android:id="@+id/song_name_textview"
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="90dp"

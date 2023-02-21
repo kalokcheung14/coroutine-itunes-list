@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.kalok.coroutineituneslist.adapters.AlbumAdapter
+import com.kalok.coroutineituneslist.adapters.SongAdapter
 import com.kalok.coroutineituneslist.adapters.BookmarkListAdapter
 import com.kalok.coroutineituneslist.databinding.FragmentBookmarksBinding
 import com.kalok.coroutineituneslist.utils.setup
@@ -22,7 +22,7 @@ class BookmarksFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var _viewAdapter : AlbumAdapter
+    private lateinit var _viewAdapter : SongAdapter
     private lateinit var _viewManager : RecyclerView.LayoutManager
     private lateinit var _shimmerLayout: ShimmerFrameLayout
 
@@ -41,14 +41,14 @@ class BookmarksFragment : Fragment() {
         _shimmerLayout.visibility = View.VISIBLE
         _shimmerLayout.startShimmer()
 
-        val albumRecyclerView = binding.albumRecyclerView
+        val songRecyclerView = binding.songRecyclerView
         // Set recycler view invisible at the beginning for loading
-        albumRecyclerView.visibility = View.INVISIBLE
+        songRecyclerView.visibility = View.INVISIBLE
 
         // Set up viewManager to handle recycler view row layout
         _viewManager = LinearLayoutManager(context)
         // Set up view adapter for recycler view dataset
-        _viewAdapter = BookmarkListAdapter(bookmarksViewModel.albumValue.value, bookmarksViewModel)
+        _viewAdapter = BookmarkListAdapter(bookmarksViewModel.songValue.value, bookmarksViewModel)
 
         // Set no bookmark notice invisible when loading
         val noBookmarkTextView = binding.noBookmarkTextview
@@ -57,16 +57,16 @@ class BookmarksFragment : Fragment() {
         // Fetch data
         bookmarksViewModel.fetchData()
 
-        // Observe for album list
+        // Observe for song list
         viewLifecycleOwner.lifecycleScope.launch {
-            bookmarksViewModel.albumValue.collect {
+            bookmarksViewModel.songValue.collect {
                 // Stop Shimmer animation
                 _shimmerLayout.stopShimmer()
 
-                // Update the UI display when update on album list is observed by passing data variable to the UI
-                binding.albumListIsEmpty = it.isEmpty()
+                // Update the UI display when update on song list is observed by passing data variable to the UI
+                binding.songListIsEmpty = it.isEmpty()
 
-                // Update the adapter when update on album list is observed
+                // Update the adapter when update on song list is observed
                 if (it.isNotEmpty()) {
                     // Load the data to adapter if the list is not empty
                     _viewAdapter.setDataset(it)
@@ -75,7 +75,7 @@ class BookmarksFragment : Fragment() {
         }
 
         // Set up recycler view
-        albumRecyclerView.apply {
+        songRecyclerView.apply {
             setup()
             layoutManager = _viewManager
             adapter = _viewAdapter

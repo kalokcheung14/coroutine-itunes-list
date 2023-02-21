@@ -2,9 +2,9 @@ package com.kalok.coroutineituneslist.repositories
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.kalok.coroutineituneslist.models.Album
+import com.kalok.coroutineituneslist.models.Song
 
-@Database(entities = [Album::class], version = 1)
+@Database(entities = [Song::class], version = 1)
 abstract class ItunesDatabase: RoomDatabase() {
-    abstract fun albumDao(): AlbumDao
+    abstract fun songDao(): SongDao
 }

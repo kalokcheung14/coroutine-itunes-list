@@ -1,7 +1,7 @@
 package com.kalok.coroutineituneslist.repositories
 
 import android.util.Log
-import com.kalok.coroutineituneslist.models.Album
+import com.kalok.coroutineituneslist.models.Song
 import com.kalok.coroutineituneslist.models.DataResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -10,20 +10,20 @@ import retrofit2.http.GET
 abstract class ApiDataRepository {
     lateinit var api: DataApi
 
-    private var cachedAlbum = DataResult<Album>(0, ArrayList())
+    private var cachedSong = DataResult<Song>(0, ArrayList())
 
-    fun getAlbums(): Flow<DataResult<Album>> {
-        Log.d("TAG", "getAlbums: ")
+    fun getSongs(): Flow<DataResult<Song>> {
+        Log.d("TAG", "getSongs: ")
         return flow {
-            Log.d("TAG", "getAlbums: flow ${cachedAlbum.results.isEmpty()}")
-            if (cachedAlbum.results.isEmpty()) {
-                // Save albums from API as cache
-                cachedAlbum = api.getAlbums()
+            Log.d("TAG", "getSongs: flow ${cachedSong.results.isEmpty()}")
+            if (cachedSong.results.isEmpty()) {
+                // Save songs from API as cache
+                cachedSong = api.getSongs()
                 // Emit result
-                emit(cachedAlbum)
+                emit(cachedSong)
             } else {
                 // Emit result
-                emit(cachedAlbum)
+                emit(cachedSong)
             }
         }.flowOn(Dispatchers.IO)
     }
@@ -31,6 +31,6 @@ abstract class ApiDataRepository {
 
 interface DataApi {
     // Call iTunes API endpoint
-    @GET("search?term=jack+johnson&entity=album")
-    suspend fun getAlbums(): DataResult<Album>
+    @GET("search?term=jack+johnson&entity=song")
+    suspend fun getSongs(): DataResult<Song>
 }
