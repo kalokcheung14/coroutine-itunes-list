@@ -14,6 +14,7 @@ class SongViewModel(
 ): ViewModel() {
     val songName = _song.trackName
     val artworkUrl = _song.artworkUrl60
+    val previewUrl = _song.previewUrl
 
     var bookmarked: Boolean = bookmarked
         set(value) {
@@ -43,4 +44,6 @@ class SongViewModel(
             }
         }
     }
+
+    var playing: Boolean = false
 }

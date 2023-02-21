@@ -75,7 +75,8 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
+        _binding?.songRecyclerView?.adapter = null
         _binding = null
+        super.onDestroyView()
     }
 }
