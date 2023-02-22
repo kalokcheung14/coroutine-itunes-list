@@ -7,4 +7,6 @@
     <string name="song_name">Song Name</string>
     <string name="cover_artwork">Cover artwork</string>
     <string name="play">Play</string>
+    <string name="search_music">Search music</string>
+    <string name="search">Search</string>
 </resources>

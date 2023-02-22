@@ -6,29 +6,22 @@ import com.kalok.coroutineituneslist.models.DataResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 abstract class ApiDataRepository {
     lateinit var api: DataApi
 
-    private var cachedSong = DataResult<Song>(0, ArrayList())
-
-    fun getSongs(): Flow<DataResult<Song>> {
+    fun getSongs(keyword: String): Flow<DataResult<Song>> {
         Log.d("TAG", "getSongs: ")
         return flow {
-            Log.d("TAG", "getSongs: flow ${cachedSong.results.isEmpty()}")
-            if (cachedSong.results.isEmpty()) {
-                // Save songs from API as cache
-                cachedSong = api.getSongs()
-            }
-
             // Emit result
-            emit(cachedSong)
+            emit(api.getSongs(keyword))
         }.flowOn(Dispatchers.IO)
     }
 }
 
 interface DataApi {
     // Call iTunes API endpoint
-    @GET("search?term=jack+johnson&entity=song")
-    suspend fun getSongs(): DataResult<Song>
+    @GET("search?entity=song")
+    suspend fun getSongs(@Query("term") keyword: String): DataResult<Song>
 }

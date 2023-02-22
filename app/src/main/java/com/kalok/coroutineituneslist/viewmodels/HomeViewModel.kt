@@ -17,18 +17,24 @@ class HomeViewModel(
 ) : ViewModel() {
     private var songs = MutableStateFlow<ArrayList<SongViewModel>>(arrayListOf())
     val songValue: StateFlow<ArrayList<SongViewModel>> = songs
+    // Default keyword
+    private var _keyword = "jack johnson"
 
     init {
         // Init mutable data value
         songs.value = ArrayList()
     }
 
-    fun fetchData() {
+    fun fetchData(keyword: String? = null) {
         var bookmarkSongList: List<Song> = emptyList()
         var networkSongList: List<Song> = emptyList()
         viewModelScope.launch(Dispatchers.IO) {
+            // Store the keyword to reload the result when returning to home
+            if (keyword != null) {
+                _keyword = keyword
+            }
             // Get API response for songs
-            _repo.getSongs().asResult().collect { result ->
+            _repo.getSongs(_keyword).asResult().collect { result ->
                 networkSongList = when(result) {
                     is Result.Success -> result.data.results
                     is Result.Error -> arrayListOf()

@@ -50,7 +50,7 @@
             android:id="@+id/bookmark_image_view"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/play_image_view"
             android:layout_marginEnd="20dp"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -58,6 +58,19 @@
             app:layout_constraintDimensionRatio="1:1"
             android:layout_gravity="center_vertical"
             android:src="@drawable/outline_bookmark_border_24"
+            android:contentDescription="@string/title_bookmarks" />
+        <ImageView
+            android:id="@+id/play_image_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            app:tint="@color/black"
+            app:layout_constraintDimensionRatio="1:1"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/play_circle_24"
             android:contentDescription="@string/title_bookmarks" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
