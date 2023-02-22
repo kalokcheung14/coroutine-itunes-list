@@ -24,7 +24,8 @@ object MediaPlayerUtils {
         )
 
         setOnCompletionListener {
-            stopSong()
+            playingSong?.playing = false
+            releasePlayer()
             onCompletionListener?.onPlayerCompleted()
         }
     }
@@ -39,11 +40,6 @@ object MediaPlayerUtils {
 
         // Save current playing song
         playingSong = song
-    }
-
-    fun stopSong() {
-        playingSong?.playing = false
-        releasePlayer()
     }
 
     fun releasePlayer() {
