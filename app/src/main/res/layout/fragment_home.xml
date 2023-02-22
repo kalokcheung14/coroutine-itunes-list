@@ -1,70 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.home.HomeFragment"
-    android:background="@color/white">
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_layout"
-        android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="resultIsEmpty"
+            type="boolean" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/search_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.home.HomeFragment"
+        android:background="@color/white">
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_layout"
+            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <include layout="@layout/shimmer_placeholder_layout" />
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/search_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="MissingConstraints">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <include layout="@layout/shimmer_placeholder_layout" />
 
-            <include layout="@layout/shimmer_placeholder_layout" />
+                <include layout="@layout/shimmer_placeholder_layout" />
 
-            <include layout="@layout/shimmer_placeholder_layout" />
+                <include layout="@layout/shimmer_placeholder_layout" />
 
-            <include layout="@layout/shimmer_placeholder_layout" />
+                <include layout="@layout/shimmer_placeholder_layout" />
 
-            <include layout="@layout/shimmer_placeholder_layout" />
+                <include layout="@layout/shimmer_placeholder_layout" />
 
-            <include layout="@layout/shimmer_placeholder_layout" />
+                <include layout="@layout/shimmer_placeholder_layout" />
 
-            <include layout="@layout/shimmer_placeholder_layout" />
+                <include layout="@layout/shimmer_placeholder_layout" />
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+        <LinearLayout
+            android:background="@color/white"
+            android:id="@+id/search_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
+            <EditText
+                android:id="@+id/search_text_view"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:hint="@string/search_music" />
+            <Button
+                android:id="@+id/search_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/TextAppearance.AppCompat.Button"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black"
+                android:text="@string/search"/>
         </LinearLayout>
-    </com.facebook.shimmer.ShimmerFrameLayout>
-    <LinearLayout
-        android:background="@color/white"
-        android:id="@+id/search_layout"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp">
-        <EditText
-            android:id="@+id/search_text_view"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/song_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/search_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/white"
+            android:visibility="@{resultIsEmpty? View.GONE : View.VISIBLE}"/>
+        <TextView
+            android:id="@+id/no_result_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@string/no_result"
+            android:background="@color/white"
             android:textColor="@color/black"
-            android:textColorHint="@color/grey"
-            android:hint="@string/search_music" />
-        <Button
-            android:id="@+id/search_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            style="@style/TextAppearance.AppCompat.Button"
-            android:textColor="@color/white"
-            android:text="@string/search"/>
-    </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/song_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/search_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/white"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/search_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{resultIsEmpty? View.VISIBLE : View.GONE}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

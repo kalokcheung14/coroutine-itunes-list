@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
+import android.widget.AbsListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,6 +51,8 @@ class HomeFragment : Fragment() {
         // Set recycler view invisible at the beginning for loading
         songRecyclerView.visibility = View.INVISIBLE
 
+        hideKeyboard()
+
         // Fetch data
         homeViewModel.fetchData()
 
@@ -61,9 +63,10 @@ class HomeFragment : Fragment() {
                 if (it.isNotEmpty()) {
                     // Update the recycler view data when update is observed
                     _viewAdapter.setDataset(it)
-                    _shimmerLayout.stopShimmer()
-                    songRecyclerView.visibility = View.VISIBLE
                 }
+                _shimmerLayout.stopShimmer()
+                // Tell the UI to update according to list result
+                binding.resultIsEmpty = it.isEmpty()
             }
         }
 
@@ -81,15 +84,32 @@ class HomeFragment : Fragment() {
                 // Search by keyword
                 homeViewModel.fetchData(keyword)
                 // Hide keyboard after search
-                val manager: InputMethodManager? = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-                manager?.hideSoftInputFromWindow(view?.windowToken, 0)
+                hideKeyboard()
                 // Dismiss recycler view and start shimmer loading screen
                 songRecyclerView.visibility = View.GONE
+                binding.noResultTextView.visibility = View.GONE
                 startShimmer()
             }
         }
 
+        songRecyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                // Hide keyboard if scrolled
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    hideKeyboard()
+                }
+            }
+        })
+
         return root
+    }
+
+    // Hide keyboard
+    private fun hideKeyboard() {
+        val manager: InputMethodManager? =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        manager?.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     // Use Shimmer Layout to display shimmer loading screen

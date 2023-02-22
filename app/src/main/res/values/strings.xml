@@ -9,4 +9,5 @@
     <string name="play">Play</string>
     <string name="search_music">Search music</string>
     <string name="search">Search</string>
+    <string name="no_result">No result</string>
 </resources>
