@@ -1,7 +1,5 @@
 package com.kalok.coroutineituneslist.adapters
 
-import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
@@ -15,12 +13,15 @@ abstract class SongAdapter(
     protected var _songs: ArrayList<SongViewModel>,
     protected val _parentViewModel: ViewModel? = null
 ): RecyclerView.Adapter<SongAdapter.ViewHolder>() {
-    private var _player: MediaPlayer? = null
-    private var _playingSong: SongViewModel? = null
-
     init {
         // Retain recycler view scroll position when fragment reattached
         stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
+
+        // Set adapter to update icon when preview ended
+        MediaPlayerUtils.player.setOnCompletionListener {
+            MediaPlayerUtils.stopSong()
+            notifyDataSetChanged()
+        }
     }
 
     inner class ViewHolder(private val _binding: SongItemRowBinding): RecyclerView.ViewHolder(_binding.root) {

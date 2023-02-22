@@ -73,17 +73,11 @@ class HomeFragment : Fragment() {
             adapter = _viewAdapter
         }
 
-        // Reset icon when play ended
-        MediaPlayerUtils.setOnCompletionListener {
-            _viewAdapter.notifyDataSetChanged()
-        }
-
         return root
     }
 
     override fun onDetach() {
         MediaPlayerUtils.releasePlayer()
-        MediaPlayerUtils.removeOnCompletionListener()
         _binding?.songRecyclerView?.adapter = null
         super.onDetach()
     }

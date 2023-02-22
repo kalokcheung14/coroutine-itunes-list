@@ -6,13 +6,9 @@ import com.kalok.coroutineituneslist.viewmodels.SongViewModel
 
 object MediaPlayerUtils {
     var playingSong: SongViewModel? = null
-    private var onCompletionListener: OnCompletionListener? = null
 
-    fun interface OnCompletionListener {
-        fun callback()
-    }
-
-    var player: MediaPlayer? = null
+    val player: MediaPlayer
+        get() = _player
 
     private val _player = MediaPlayer().apply {
         setAudioAttributes(
@@ -22,19 +18,14 @@ object MediaPlayerUtils {
                 .build()
         )
 
-        // Release player when preview ended
         setOnCompletionListener {
-            playingSong?.playing = false
-            releasePlayer()
-            // Call on completion callback
-            onCompletionListener?.callback()
+            stopSong()
         }
     }
 
     // Play preview from URL
     fun play(song: SongViewModel) {
-        player = _player
-        player?.apply {
+        player.apply {
             setDataSource(song.previewUrl)
             prepare()
             start()
@@ -44,26 +35,20 @@ object MediaPlayerUtils {
         playingSong = song
     }
 
-    fun setOnCompletionListener(callback: OnCompletionListener) {
-        this.onCompletionListener = callback
-    }
-
-    fun removeOnCompletionListener() {
-        this.onCompletionListener = null
+    fun stopSong() {
+        playingSong?.playing = false
+        releasePlayer()
     }
 
     fun releasePlayer() {
         // Stop and release player if it is playing
-        if (player != null) {
-            // Release player
-            if (player?.isPlaying == true)
-                player?.stop()
-                player?.reset()
-                player = null
-            // Reset playing song icon
-            playingSong?.playing = false
-            playingSong = null
-        }
+        // Release player
+        if (player.isPlaying)
+            player.stop()
+        player.reset()
+        // Reset playing song icon
+        playingSong?.playing = false
+        playingSong = null
     }
 
 }

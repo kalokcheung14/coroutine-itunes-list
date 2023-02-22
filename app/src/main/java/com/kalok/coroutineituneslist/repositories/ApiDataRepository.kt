@@ -19,12 +19,10 @@ abstract class ApiDataRepository {
             if (cachedSong.results.isEmpty()) {
                 // Save songs from API as cache
                 cachedSong = api.getSongs()
-                // Emit result
-                emit(cachedSong)
-            } else {
-                // Emit result
-                emit(cachedSong)
             }
+
+            // Emit result
+            emit(cachedSong)
         }.flowOn(Dispatchers.IO)
     }
 }
