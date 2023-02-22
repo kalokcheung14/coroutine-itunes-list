@@ -18,8 +18,7 @@ abstract class SongAdapter(
         stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         // Set adapter to update icon when preview ended
-        MediaPlayerUtils.player.setOnCompletionListener {
-            MediaPlayerUtils.stopSong()
+        MediaPlayerUtils.onCompletionListener = MediaPlayerUtils.OnCompletionListener {
             notifyDataSetChanged()
         }
     }

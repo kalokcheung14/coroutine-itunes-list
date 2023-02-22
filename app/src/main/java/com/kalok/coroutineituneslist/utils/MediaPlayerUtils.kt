@@ -6,6 +6,11 @@ import com.kalok.coroutineituneslist.viewmodels.SongViewModel
 
 object MediaPlayerUtils {
     var playingSong: SongViewModel? = null
+    var onCompletionListener: OnCompletionListener? = null
+
+    fun interface OnCompletionListener {
+        fun onPlayerCompleted()
+    }
 
     val player: MediaPlayer
         get() = _player
@@ -20,6 +25,7 @@ object MediaPlayerUtils {
 
         setOnCompletionListener {
             stopSong()
+            onCompletionListener?.onPlayerCompleted()
         }
     }
 
